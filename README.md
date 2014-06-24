@@ -1,4 +1,4 @@
 Trabalho-ISMAT-CD
 =================
 
-Trabalho de Computação DIstribuida
+Trabalho de Computação Distribuida
