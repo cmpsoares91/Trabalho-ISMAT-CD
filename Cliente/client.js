@@ -16,10 +16,10 @@
  */
 //Global variables
 var postQueue    = new Q.Queue(); //Queue with the posts
-var arrayPosts   = new Array(); //postJob Object array
+var arrayPosts   = new Array();   //postJob Object array
 
 //Load configuration data to variables
-var maxQueueSize = config.locations.length; //Maximum size of queue will depend of the number of hosts
+var maxPosts = config.locations.length; //Maximum number of posts working simultaneously, it depends on the number of hosts
 var bSize, objString, bString;
 //bSize load:
 try {
@@ -67,21 +67,20 @@ function postJob(URL, blockNum){
     var tempresult;
 	
 	$.ajax({
-		'url': URL,
 		'type' : 'POST',
-		'headers' : {'Content-Type' : 'application/json'},
+		'url': URL + "/app.php",
 		'data' : JSON.stringify(requestObject), 
 		'processData' : false,
-		'success' : function(data) {
+		'success' : function(data, textStatus, jqXHR) {
                         tempresult = jQuery.parseJSON(data)
 						console.log(data);
 					},
-		'error': function(jqXHR, data){
-			console.log(data);
-	    },
-		'dataType' : 'json'
+		'error': function(jqXHR, textStatus, errorThrown){
+			console.log(textStatus);
+	    }
 	});
-        this.result = tempresult;
+	
+	this.result = tempresult;
 }
 
 //main function
@@ -96,30 +95,33 @@ function main(){
 	console.log(args);
     
 	var result = false;
-    var a=0;
-    var block = 1000;
+    var a = 0, block = 0;
 	
 	//Main loop only stops if result is true
     while (result !== true){
+		for(a = 0; a < maxPosts; a++){
+			if(arrayPosts[a] === null){
+				if (!queue.isEmpty()) {
+					new postJob(config.locations[a], block);
+					arrayPosts[a] = block++;
+				}
+				else {
+					new postJob(config.locations[a], queue.dequeue());
+				}
+			}
+			
+		}
         //push into the queue the object
-        if (postQueue.getLength() <= maxQueueSize ){
+        if (!queue.isEmpty()){
             arrayPosts[a] = new postJob(config.locations[a], block);
             postQueue.enqueue(arrayPosts[a]);
         }
         //pulls the object from the queue if returns false
         if (arrayPosts[a].result == 'false'){
             postQueue.dequeue(arrayPosts[a]);
+			a++;
+			block++;
         } 
-        //if it returns true stops the main loop
-        else if (arrayPosts[a].result == 'true'){
-            result = true;
-        }
-        a++;
-        block = block+1000;
-        if ( a > maxQueueSize){
-            a = 0;
-        }
-        
     }
     
 }

@@ -1,7 +1,7 @@
 <?php
 	if (!$_POST['data'] == ""){
 		$data = json_decode($_POST['data']);
-		$string = $data->{'baseStr'};
+		$string = $data->{'base'};
 		$min = $data->{'block'} * $data->{'blockSize'};
 		$max = $min + $data->{'blockSize'} - 1;
 		$result = $data->{'objective'};
