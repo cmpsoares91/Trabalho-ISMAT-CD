@@ -19,10 +19,10 @@ function postJob(baseString, URL, blockNum){
     this.result;
     
 	var requestObject = {
-		blockSize: bs || 1000;
-		block: blockNum,
-		baseStr: str || baseString,
-		objective: objStr || "00000"
+		blockSize = bs || 1000;
+		block = blockNum,
+		baseStr = baseString || "Hello, World!",
+		objective = objStr || "00000"
 	};
         var tempresult;
 	$.ajax({
