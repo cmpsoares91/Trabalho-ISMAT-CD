@@ -117,7 +117,7 @@ function main(){
     while (result !== true){
 		for(a = 0; a < maxPosts; a++){
 			if(arrayPosts[a] === null){
-				if (!postQueue.isEmpty()) {
+				if (postQueue.isEmpty()) {
 					new postJob(config.locations[a], block);
 					arrayPosts[a] = block++;
 				}
