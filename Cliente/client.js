@@ -53,7 +53,7 @@ catch(err) {
 main();
 
 //postJob object
-function postJob(URL, blockNum){
+var postJob = function(URL, blockNum){
     
 	//Define Post request object
 	var requestObject       = {};
@@ -97,7 +97,7 @@ function postJob(URL, blockNum){
 			}
 	    }
 	});
-}
+};
 
 //main function
 function main(){
@@ -121,15 +121,18 @@ function main(){
 			if(arrayPosts[a] === undefined){
 				console.log("Array spot is null: " + arrayPosts[a]);
 				if (blockQueue.isEmpty()) {
-					new postJob(config.locations[a], block);
-					arrayPosts[a] = block++;
 					//debug
 					console.log("Queue is empty");
+				
+					postJob(config.locations[a], block);
+					arrayPosts[a] = block++;
 				}
 				else {
-					new postJob(config.locations[a], blockQueue.peek());
-					arrayPosts[a] = blockQueue.dequeue();
+					//debug
 					console.log("Queue is not empty");
+					
+					postJob(config.locations[a], blockQueue.peek());
+					arrayPosts[a] = blockQueue.dequeue();
 				}
 			}	
 		}
