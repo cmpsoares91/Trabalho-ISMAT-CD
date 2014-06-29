@@ -5,5 +5,8 @@
 		{ "domain": "slave3.quantbull.org" },
 		{ "domain": "slave4.quantbull.org" },
 		{ "domain": "slave5.quantbull.org" }
-	]
+	],
+	"blockSize": 100,
+	"baseString": "Hello prof. Pedro Freire!",
+	"objective": "0000"
 }
