@@ -55,8 +55,6 @@ main();
 //postJob object
 function postJob(URL, blockNum){
     
-    this.result;
-    
 	//Define Post request object
 	var requestObject       = {};
 	requestObject.blockSize = bSize || 1000;
@@ -64,7 +62,7 @@ function postJob(URL, blockNum){
 	requestObject.objective = objString || "00000";
 	requestObject.block     = blockNum;
 	
-    var tempresult;
+    var result;
 	
 	$.ajax({
 		'type' : 'POST',
@@ -72,15 +70,33 @@ function postJob(URL, blockNum){
 		'data' : JSON.stringify(requestObject), 
 		'processData' : false,
 		'success' : function(data, textStatus, jqXHR) {
-                        tempresult = jQuery.parseJSON(data)
-						console.log(data);
+                        result = jQuery.parseJSON(data)
+						console.log(tempresult);
+						if(result.found){
+							console.log("Problem Solved!");
+							console.log("The resolution is: " + result.resolution);
+							console.log("The hash result is: " + result.hash);
+							process.exit(0);
+						}
+						console.log("Not found clearing slave...");
+						arrayPosts[arrayPosts.indexOf(blockNum)] = null;
 					},
 		'error': function(jqXHR, textStatus, errorThrown){
 			console.log(textStatus);
+			if(textStatus === 'parsererror') {
+				console.log("There occurred a " + textStatus);
+				console.log("Error: " + errorThrown);
+				process.exit(1);
+			}
+			else {
+				console.log("There occurred a " + textStatus);
+				console.log("Error: " + errorThrown);
+				console.log("Adding block number to queue...");
+				arrayPosts[arrayPosts.indexOf(blockNum)] = null;
+				postQueue.enqueue(blockNum);
+			}
 	    }
 	});
-	
-	this.result = tempresult;
 }
 
 //main function
@@ -101,27 +117,15 @@ function main(){
     while (result !== true){
 		for(a = 0; a < maxPosts; a++){
 			if(arrayPosts[a] === null){
-				if (!queue.isEmpty()) {
+				if (!postQueue.isEmpty()) {
 					new postJob(config.locations[a], block);
 					arrayPosts[a] = block++;
 				}
 				else {
-					new postJob(config.locations[a], queue.dequeue());
+					new postJob(config.locations[a], postQueue.peek());
+					arrayPosts[a] = postQueue.dequeue();
 				}
-			}
-			
+			}	
 		}
-        //push into the queue the object
-        if (!queue.isEmpty()){
-            arrayPosts[a] = new postJob(config.locations[a], block);
-            postQueue.enqueue(arrayPosts[a]);
-        }
-        //pulls the object from the queue if returns false
-        if (arrayPosts[a].result == 'false'){
-            postQueue.dequeue(arrayPosts[a]);
-			a++;
-			block++;
-        } 
     }
-    
 }

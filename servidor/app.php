@@ -13,14 +13,15 @@
 			$res = hash('sha256', $string+$i);
 			
 			if ($res == $result){
+				$json_string = "{\"found\": \"true\", \"resolution\": \"" + $string+$i + "\", \"hash\": \"" + $res +"\"}"
 				ob_start();
-				echo "true";
+				echo json_encode($json_string);
 				break;
 			}
 		}
 		if ($res =! $result){
 			ob_start();
-			echo "false";
+			echo json_encode("{\"found\": \"false\"}");
 		}
 	}
 ?>
