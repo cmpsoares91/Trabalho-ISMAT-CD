@@ -47,7 +47,7 @@ function postJob(baseString, URL, blockNum){
 function getDomains(){
     var temp;
     var tempSize;
-    $.getJSON('example.json', function(response){
+    $.getJSON('config.json', function(response){
        temp = response;
        tempSize = Object.keys(response).length;
     });
