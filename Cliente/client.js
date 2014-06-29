@@ -1,7 +1,8 @@
 /**
  * Applicação de Cliente em Node.js
  */
- var $      = require('jquery');
+ var jsdom  = require('jsdom');
+ var $      = require('jquery')(window);
  var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
  var Q      = require('./Queue.js');
  
