@@ -1,4 +1,4 @@
-//Original JS function: code.stephenmorley.org
+//Original JS function: http://code.stephenmorley.org/javascript/queues/
 //Edited to work as a Node.js tool
 module.exports = {
 	Queue: function (){
