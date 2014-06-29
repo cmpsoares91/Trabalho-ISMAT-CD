@@ -3,16 +3,17 @@
  */
  var $      = require('jquery');
  var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
- var Queue  = require('./Queue.js');
+ var Q  = require('./Queue.js');
+ console.log(typeof Q.Queue);
  
  /**
  *  An example HTTP POST request.
  */
 //Global variables
-var domains = new Array(); //receive domains from config file;
-var postQueue = new Queue(); //Queue with dor the posts
+//var domains = new Array(); //receive domains from config file;
+var postQueue = new Q.Queue(); //Queue with the posts
 var maxQueueSize; //Maximum size of queue will depend of the number of hosts
-var arrayPosts = new Array(); //array de objectos postJob
+var arrayPosts = new Array(); //postJob Object array
 
 //postJob object
 function postJob(baseString, URL, blockNum){
@@ -21,10 +22,11 @@ function postJob(baseString, URL, blockNum){
     
 	var requestObject = {};
 	
-	requestObject.blockSize = bs || 1000;
+	requestObject.blockSize = bSize || 1000;
 	requestObject.block = blockNum;
 	requestObject.baseStr = baseString || "Hello, World!";
 	requestObject.objective = objStr || "00000";
+	
         var tempresult;
 	$.ajax({
 		'url': URL,
@@ -44,8 +46,9 @@ function postJob(baseString, URL, blockNum){
         this.result = tempresult;
 }
 
-//Provavelmente não é necessário...
+//Não é necessário...
 //function to get the domains from config.json
+/*
 function getDomains(){
     var temp;
     var tempSize;
@@ -56,6 +59,7 @@ function getDomains(){
     domains = temp;
     maxQueueSize = tempsize;
 }
+*/
 
 //main function
 function main(){
