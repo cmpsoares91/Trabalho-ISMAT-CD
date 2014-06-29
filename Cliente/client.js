@@ -53,7 +53,7 @@ catch(err) {
 main();
 
 //postJob object
-var postJob = function(URL, blockNum){
+function postJob(URL, blockNum){
     
 	//Define Post request object
 	var requestObject       = {};
@@ -65,11 +65,11 @@ var postJob = function(URL, blockNum){
     var result;
 	
 	$.ajax({
-		'type' : 'POST',
-		'url': URL + '/app.php',
-		'data' : JSON.stringify(requestObject), 
-		'processData' : false,
-		'success' : function(data, textStatus, jqXHR) {
+		type : 'POST',
+		url: URL + '/app.php',
+		data : JSON.stringify(requestObject), 
+		processData : false,
+		success : function(data, textStatus, jqXHR) {
                         result = jQuery.parseJSON(data)
 						console.log(tempresult);
 						if(result.found){
@@ -81,7 +81,7 @@ var postJob = function(URL, blockNum){
 						console.log("Not found clearing slave...");
 						arrayPosts[arrayPosts.indexOf(blockNum)] = null;
 					},
-		'error': function(jqXHR, textStatus, errorThrown){
+		error: function(jqXHR, textStatus, errorThrown){
 			console.log(textStatus);
 			if(textStatus === 'parsererror') {
 				console.log("There occurred a " + textStatus);
@@ -97,7 +97,7 @@ var postJob = function(URL, blockNum){
 			}
 	    }
 	});
-};
+}
 
 //main function
 function main(){
@@ -124,14 +124,14 @@ function main(){
 					//debug
 					console.log("Queue is empty");
 				
-					postJob(config.locations[a], block);
+					new postJob(config.locations[a], block);
 					arrayPosts[a] = block++;
 				}
 				else {
 					//debug
 					console.log("Queue is not empty");
 					
-					postJob(config.locations[a], blockQueue.peek());
+					new postJob(config.locations[a], blockQueue.peek());
 					arrayPosts[a] = blockQueue.dequeue();
 				}
 			}	
