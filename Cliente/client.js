@@ -66,7 +66,7 @@ function postJob(URL, blockNum){
 	
 	$.ajax({
 		'type' : 'POST',
-		'url': URL + "/app.php",
+		'url': URL + '/app.php',
 		'data' : JSON.stringify(requestObject), 
 		'processData' : false,
 		'success' : function(data, textStatus, jqXHR) {
@@ -118,7 +118,7 @@ function main(){
 		for(a = 0; a < maxPosts; a++){
 			//debug
 			console.log("Array spot is: " + arrayPosts[a]);
-			if(arrayPosts[a] === null){
+			if(arrayPosts[a] === undefined){
 				console.log("Array spot is null: " + arrayPosts[a]);
 				if (blockQueue.isEmpty()) {
 					new postJob(config.locations[a], block);
