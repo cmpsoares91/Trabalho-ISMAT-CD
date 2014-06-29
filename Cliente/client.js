@@ -2,7 +2,7 @@
  * Applicação de Cliente em Node.js
  */
  var $      = require('jquery');
- var config = require('/config.json');
+ var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
  
  /**
  *  An example HTTP POST request.
@@ -43,6 +43,7 @@ function postJob(baseString, URL, blockNum){
         this.result = tempresult;
 }
 
+//Provavelmente não é necessário...
 //function to get the domains from config.json
 function getDomains(){
     var temp;

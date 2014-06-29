@@ -1,3 +1,9 @@
-locations : [
-	{ domain: "slave1.adromedaquest.com" }
-]
+{
+	"locations": [
+		{ "domain": "slave1.quantbull.org" },
+		{ "domain": "slave2.quantbull.org" },
+		{ "domain": "slave3.quantbull.org" },
+		{ "domain": "slave4.quantbull.org" },
+		{ "domain": "slave5.quantbull.org" }
+	]
+}
