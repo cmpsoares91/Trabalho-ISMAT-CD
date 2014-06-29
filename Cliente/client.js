@@ -15,7 +15,7 @@
  *  An example HTTP POST request.
  */
 //Global variables
-var postQueue    = new Q.Queue(); //Queue with the posts
+var blockQueue    = new Q.Queue(); //Queue with the posts
 var arrayPosts   = new Array();   //postJob Object array
 
 //Load configuration data to variables
@@ -93,7 +93,7 @@ function postJob(URL, blockNum){
 				console.log("Error: " + errorThrown);
 				console.log("Adding block number to queue...");
 				arrayPosts[arrayPosts.indexOf(blockNum)] = null;
-				postQueue.enqueue(blockNum);
+				blockQueue.enqueue(blockNum);
 			}
 	    }
 	});
@@ -116,14 +116,20 @@ function main(){
 	//Main loop only stops if result is true
     while (result !== true){
 		for(a = 0; a < maxPosts; a++){
+			//debug
+			console.log("Array spot is: " + arrayPosts[a]);
 			if(arrayPosts[a] === null){
-				if (postQueue.isEmpty()) {
+				console.log("Array spot is null: " + arrayPosts[a]);
+				if (blockQueue.isEmpty()) {
 					new postJob(config.locations[a], block);
 					arrayPosts[a] = block++;
+					//debug
+					console.log("Queue is empty");
 				}
 				else {
-					new postJob(config.locations[a], postQueue.peek());
-					arrayPosts[a] = postQueue.dequeue();
+					new postJob(config.locations[a], blockQueue.peek());
+					arrayPosts[a] = blockQueue.dequeue();
+					console.log("Queue is not empty");
 				}
 			}	
 		}
