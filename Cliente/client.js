@@ -3,6 +3,7 @@
  */
  var $      = require('jquery');
  var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
+ var Queue  = require('./Queue.js');
  
  /**
  *  An example HTTP POST request.
@@ -18,12 +19,12 @@ function postJob(baseString, URL, blockNum){
     
     this.result;
     
-	var requestObject = {
-		blockSize = bs || 1000;
-		block = blockNum,
-		baseStr = baseString || "Hello, World!",
-		objective = objStr || "00000"
-	};
+	var requestObject = {};
+	
+	requestObject.blockSize = bs || 1000;
+	requestObject.block = blockNum;
+	requestObject.baseStr = baseString || "Hello, World!";
+	requestObject.objective = objStr || "00000";
         var tempresult;
 	$.ajax({
 		'url': URL,
