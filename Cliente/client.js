@@ -18,16 +18,16 @@ function postJob(URL, blockNum){
     var base      = bString.value;
     var objective = objString.value;
     var block     = blockNum;
-    alert(base);    
+    //alert(base);    
     console.log(base);
-    
+    console.log(URL);
     var result;
-      
-       $.ajax({url: URL + '/app.php', type: "POST",
+      alert(URL);
+       $.ajax({url: URL, type: "POST",
 		data : {'blockSize': blockSize, 'base': base, 'objective': objective, 'block': block}, 
 		success : function(data) {
                         result = jQuery.parseJSON(data);
-                        console.log(tempresult);
+                        console.log(result);
                         if(result[0]===true){
                                 //Solution found, print that, stop cicle.
                                 console.log("Solution found...");
@@ -54,7 +54,7 @@ console.log("depois postJob");
 function main(){
 	console.log("entrou");
 	//initialize variable so that if some aren't defined it used defaults from config.json
-	jsonData = "{\"locations\": [\"slave1.quantbull.org\",\"slave2.quantbull.org\",\"slave3.quantbull.org\",\"slave4.quantbull.org\",\"slave5.quantbull.org\"],\"blockSize\": 1000,\"baseString\": \"Hello prof. Pedro Freire!\",\"objective\": \"0000\"}";
+	jsonData = "{\"locations\": [\"http://slave1.quantbull.org/app.php\",\"http://slave2.quantbull.org/app.php\",\"http://slave3.quantbull.org/app.php\",\"http://slave4.quantbull.org/app.php\",\"http://slave5.quantbull.org/app.php\"],\"blockSize\": 1000,\"baseString\": \"Hello prof. Pedro Freire!\",\"objective\": \"0000\"}";
 	var config = jQuery.parseJSON(jsonData);
 	//config.locations.length e config.locations[0] devem estar a funcionar agora...
 	maxPosts     = config.locations.length; //Maximum number of posts working simultaneously, it depends on the number of hosts
@@ -102,6 +102,8 @@ function main(){
 	//Main loop only stops if result is true
     while (result !== true){
 		for(a = 0; a < maxPosts; a++){
+                    console.log(a);
+                    console.log(maxPosts);
 			if(arrayPosts[a] === undefined || arrayPosts[a] === null){
 				console.log("starting a postjob");
 				if (blockQueue.isEmpty()) {				
