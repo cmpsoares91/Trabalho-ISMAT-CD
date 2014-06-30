@@ -1,11 +1,5 @@
 <?php
-	//input logfile
-	error_log((string)$_POST,0);
-	echo $_POST['base'];
-        $expe = json_decode ($_POST['']);
-        print $expe;
-        //$resultarray = array();
-	echo "experiencia";
+	
 	if (!$_POST['base'] == ""){
                 $string = $_POST['base'];
                 $block = $_POST['block'];

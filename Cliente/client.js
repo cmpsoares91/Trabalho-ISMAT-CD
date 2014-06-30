@@ -15,11 +15,11 @@ function postJob(URL, blockNum){
 	requestObject.base      = bString || "Hello, World!";
 	requestObject.objective = objString || "00000";
 	requestObject.block     = blockNum;
-
+    URL = URL + '/app.php';
     var result;
-
-	$.ajax({url: URL + '/app.php',type : 'POST',
-		data : {"blockSize": requestObject.blockSize, "base": requestObject.base, "objective": requestObject.objective, "block": requestObject.block}, 
+        
+       	$.ajax({url: URL,type : 'post',
+		data : {'blockSize': requestObject.blockSize, 'base': requestObject.base, 'objective': requestObject.objective, 'block': requestObject.block}, 
 		success : function(data) {
                         result = jQuery.parseJSON(data);
 						console.log(tempresult);
