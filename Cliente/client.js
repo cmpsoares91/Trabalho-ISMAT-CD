@@ -1,8 +1,6 @@
 /**
  * Applicação de Cliente em Node.js
  */
- var env = require('jsdom').env, html = '<html></html>';
- var $      = require('jquery')(window);
  var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
  var Q      = require('./Queue.js');
  
@@ -56,47 +54,52 @@ main();
 //postJob object
 function postJob(URL, blockNum){
     
-	//Define Post request object
-	var requestObject       = {};
-	requestObject.blockSize = bSize || 1000;
-	requestObject.base      = bString || "Hello, World!";
-	requestObject.objective = objString || "00000";
-	requestObject.block     = blockNum;
-	
-    var result;
-	
-	$.ajax({
-		type : 'POST',
-		url: URL + '/app.php',
-		data : JSON.stringify(requestObject), 
-		processData : false,
-		success : function(data, textStatus, jqXHR) {
-                        result = jQuery.parseJSON(data)
-						console.log(tempresult);
-						if(result.found){
-							console.log("Problem Solved!");
-							console.log("The resolution is: " + result.resolution);
-							console.log("The hash result is: " + result.hash);
-							process.exit(0);
-						}
-						console.log("Not found clearing slave...");
-						arrayPosts[arrayPosts.indexOf(blockNum)] = null;
-					},
-		error: function(jqXHR, textStatus, errorThrown){
-			console.log(textStatus);
-			if(textStatus === 'parsererror') {
-				console.log("There occurred a " + textStatus);
-				console.log("Error: " + errorThrown);
-				process.exit(1);
+	var env = require('jsdom').env, html = '<html></html>';
+	env(html, function (errors, window) {
+		var $      = require('jquery')(window);
+		
+		//Define Post request object
+		var requestObject       = {};
+		requestObject.blockSize = bSize || 1000;
+		requestObject.base      = bString || "Hello, World!";
+		requestObject.objective = objString || "00000";
+		requestObject.block     = blockNum;
+		
+		var result;
+		
+		$.ajax({
+			type : 'POST',
+			url: URL + '/app.php',
+			data : JSON.stringify(requestObject), 
+			processData : false,
+			success : function(data, textStatus, jqXHR) {
+							result = jQuery.parseJSON(data)
+							console.log(tempresult);
+							if(result.found){
+								console.log("Problem Solved!");
+								console.log("The resolution is: " + result.resolution);
+								console.log("The hash result is: " + result.hash);
+								process.exit(0);
+							}
+							console.log("Not found clearing slave...");
+							arrayPosts[arrayPosts.indexOf(blockNum)] = null;
+						},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log(textStatus);
+				if(textStatus === 'parsererror') {
+					console.log("There occurred a " + textStatus);
+					console.log("Error: " + errorThrown);
+					process.exit(1);
+				}
+				else {
+					console.log("There occurred a " + textStatus);
+					console.log("Error: " + errorThrown);
+					console.log("Adding block number to queue...");
+					arrayPosts[arrayPosts.indexOf(blockNum)] = null;
+					blockQueue.enqueue(blockNum);
+				}
 			}
-			else {
-				console.log("There occurred a " + textStatus);
-				console.log("Error: " + errorThrown);
-				console.log("Adding block number to queue...");
-				arrayPosts[arrayPosts.indexOf(blockNum)] = null;
-				blockQueue.enqueue(blockNum);
-			}
-	    }
+		});
 	});
 }
 
