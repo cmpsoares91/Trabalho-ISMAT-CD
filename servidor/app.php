@@ -1,12 +1,9 @@
 <?php
 	//input logfile
-	$logfile = 'input.log';
-	$input = file_get_contents($logfile);
-	$json = file_get_contents('php://input');
-	$input .= $json;
-	$obj = json_decode($json);
-	$input .= $obj;
-	file_put_contents($logfile, $current);
+	$req_dump = print_r($_REQUEST, TRUE);
+	$fp = fopen('request.log', 'a');
+	fwrite($fp, $req_dump);
+	fclose($fp);
 
 	if (!$_POST['data'] == ""){
 		$exp = "entrei";
