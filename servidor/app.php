@@ -1,6 +1,6 @@
 <?php
 	if (!$_POST['body'] == ""){
-		$data = json_decode($_POST['data']);
+		$data = json_decode($_POST['body']);
 		$string = $data->{'base'};
 		$min = $data->{'block'} * $data->{'blockSize'};
 		$max = $min + $data->{'blockSize'} - 1;
