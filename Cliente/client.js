@@ -1,44 +1,8 @@
-var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
-var Q      = require('./Queue.js');
-
 //Global variables
-var blockQueue   = new Q.Queue(); //Queue with the posts
+var blockQueue   = new Queue(); //Queue with the posts
 var arrayPosts   = new Array();   //postJob Object array
 var result       = false; 		  //flag for cycle
-
-//Load configuration data to variables
-var maxPosts     = config.locations.length; //Maximum number of posts working simultaneously, it depends on the number of hosts
-var bSize, objString, bString;
-//bSize load:
-try {
-	bSize = config.blockSize;
-}
-catch(err) {
-	//Debug:
-	console.log("Couldn't load blockSize from config");
-	console.log(err);
-}
-//objString load:
-try {
-	objString = config.objective;
-}
-catch(err) {
-	//Debug:
-	console.log("Couldn't load objective string from config");
-	console.log(err);
-}
-//bString load:
-try {
-	bString = config.baseString;
-}
-catch(err) {
-	//Debug:
-	console.log("Couldn't load base string from config");
-	console.log(err);
-}
-
-//Run main
-main();
+var maxPosts, bSize, objString, bString;
 
 //postJob object
 function postJob(URL, blockNum){
@@ -83,8 +47,39 @@ function postJob(URL, blockNum){
 
 //main function
 function main(){
-    //Debug
-	console.log("main init");
+	
+	//initialize variable so that if some aren't defined it used defaults from config.json
+	$.getJSON('./config.json', function(config) {
+		//config.locations.length e config.locations[0] devem estar a funcionar agora...
+		maxPosts     = config.locations.length; //Maximum number of posts working simultaneously, it depends on the number of hosts
+		//bSize load:
+		try {
+			bSize = config.blockSize;
+		}
+		catch(err) {
+			//Debug:
+			console.log("Couldn't load blockSize from config");
+			console.log(err);
+		}
+		//objString load:
+		try {
+			objString = config.objective;
+		}
+		catch(err) {
+			//Debug:
+			console.log("Couldn't load objective string from config");
+			console.log(err);
+		}
+		//bString load:
+		try {
+			bString = config.baseString;
+		}
+		catch(err) {
+			//Debug:
+			console.log("Couldn't load base string from config");
+			console.log(err);
+		}
+	});
 	
 	//Retrieve arguments
     var bString = document.getElementById("frase");
