@@ -1,7 +1,7 @@
 <?php
 	//input logfile
 	error_log((string)$_POST,0);
-	echo $_POST;
+	echo $_POST['base'];
         
         //$resultarray = array();
 	

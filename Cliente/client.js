@@ -67,8 +67,8 @@ function postJob(URL, blockNum){
 	requestObject.block     = blockNum;
 	
 	var url = 'http://' + URL + '/app.php';
-	var codeString = JSON.stringify(requestObject);
-	var result;
+	//var codeString = JSON.stringify(requestObject);
+	//var result;
 	
 	//debug
 	console.log("body: " + JSON.stringify(requestObject));
@@ -81,17 +81,18 @@ function postJob(URL, blockNum){
 	// An object of options to indicate where to post to
 	var post_options = {
 	  host: url,
+          port: 80,
 	  path: '/app.php',
 	  method: 'POST',
-          headers : {
+          headers: {
             'Content-Type' : 'application/x-www-form-urlencoded',
             'Content-Length' : postlength
             }
 	};
-	
+	/*
 	callback = function (res) {
-		res.setEncoding('utf8');
-		
+		//res.setEncoding('utf8');
+		console.log(res);
 		res.on('data', function (chunk) {
 		  str += chunk;
 		});
@@ -99,10 +100,19 @@ function postJob(URL, blockNum){
 		res.on('end', function () {
 		console.log('Response: ' + str);
 		});
-	}
+	}*/
 
 	// Set up the request
-	var post_req = http.request(post_options, callback);
+        var str = "";
+	var post_req = http.request(post_options, function (res){
+            res.on('data', function (chunk) {
+                console.log(str);
+                str += chunk;
+            });
+            res.on('end', function() { 
+                console.log(str);
+            });
+        });
 	  // post the data
 	post_req.write(post_data);
 	post_req.end();
