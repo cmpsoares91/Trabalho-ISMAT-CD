@@ -39,13 +39,16 @@
 				ob_start();
 				$json_string = "{\"found\": \"true\", \"resolution\": \"" + $string+$i + "\", \"hash\": \"" + $res +"\"}";
                                 $resultarray = array('data'=>$json_string);
-                                echo json_encode($resultarray);
+                                $result = true;
+                                echo json_encode($result);
 				break;
 			}
 		}
 		if ($res =! $objective){
 			ob_start();
-			echo json_encode("{\"found\": \"false\"}");
+                        $result=false;
+                        echo json_encode($result);
+			//echo json_encode("{\"found\": \"false\"}");
 		}
 	}
 ?>

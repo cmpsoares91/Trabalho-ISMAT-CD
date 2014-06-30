@@ -2,38 +2,43 @@
 console.log("antes decl");
 var blockQueue   = new Queue(); //Queue with the posts
 var arrayPosts   = new Array();   //postJob Object array
+var arrayxpto   = new Array();
 var result       = false; 		  //flag for cycle
 //variables for use with html
 var maxPosts, bSize, objString, bString, found, resolution, hash;
 console.log("depois decl");
+
+
 //postJob object
 function postJob(URL, blockNum){
     
-	//Define Post request object
-	var requestObject       = {};
-	requestObject.blockSize = bSize || 1000;
-	requestObject.base      = bString || "Hello, World!";
-	requestObject.objective = objString || "00000";
-	requestObject.block     = blockNum;
-    URL = URL + '/app.php';
+    //Define Post request object
+    //var requestObject       = {};
+    var blockSize = bSize.value;
+    var base      = bString.value;
+    var objective = objString.value;
+    var block     = blockNum;
+    alert(base);    
+    console.log(base);
+    
     var result;
-        
-       	$.ajax({url: URL,type : 'post',
-		data : {'blockSize': requestObject.blockSize, 'base': requestObject.base, 'objective': requestObject.objective, 'block': requestObject.block}, 
+      
+       $.ajax({url: URL + '/app.php', type: "POST",
+		data : {'blockSize': blockSize, 'base': base, 'objective': objective, 'block': block}, 
 		success : function(data) {
                         result = jQuery.parseJSON(data);
-						console.log(tempresult);
-						if(result.found){
-							//Solution found, print that, stop cicle.
-							console.log("Solution found...");
-							result = true;
-							found.textContent = "Solucao encontrada";
-							resolution.textContent = result.resolution;
-							hash.textContent = result.hash;
-						}
-						console.log("Not found clearing slave...");
-						arrayPosts[arrayPosts.indexOf(blockNum)] = null;
-					},
+                        console.log(tempresult);
+                        if(result[0]===true){
+                                //Solution found, print that, stop cicle.
+                                console.log("Solution found...");
+                                result = true;
+                                //found.textContent = "Solucao encontrada";
+                                //resolution.textContent = result.resolution;
+                                //hash.textContent = result.hash;
+                        }
+                        console.log("Not found clearing slave...");
+                        arrayPosts[arrayPosts.indexOf(blockNum)] = null;
+                },
 		error: function(textStatus, errorThrown){
 			console.log(textStatus);
 			//error occurred print that and add block number to queue...
@@ -82,9 +87,9 @@ function main(){
 	}
 	
 	//Retrieve arguments
-    bString    = document.getElementById("frase");
-	objString  = document.getElementById("object");
-	bSize      = document.getElementById("bloco");
+        bString    = document.getElementById("frase");//.value;
+	objString  = document.getElementById("object");//.value;
+	bSize      = document.getElementById("bloco");//.value;
 	
 	//output variables
 	found      = document.getElementById("encontrou");
@@ -100,11 +105,11 @@ function main(){
 			if(arrayPosts[a] === undefined || arrayPosts[a] === null){
 				console.log("starting a postjob");
 				if (blockQueue.isEmpty()) {				
-					new postJob(config.locations[a], block);
+					arrayxpto [a] = new postJob(config.locations[a], block);
 					arrayPosts[a] = block++;
 				}
 				else {
-					new postJob(config.locations[a], blockQueue.peek());
+					arrayxpto [a] = new postJob(config.locations[a], blockQueue.peek());
 					arrayPosts[a] = blockQueue.dequeue();
 				}
 			}	
