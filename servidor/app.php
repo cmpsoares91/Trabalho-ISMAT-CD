@@ -1,6 +1,13 @@
 <?php
 	if (!$_POST['body'] == ""){
-		print "entrei";
+		$exp = "entrei";
+                
+                //logfile
+                $logfile = 'log.txt';
+                $current = file_get_contents($logfile);
+                $current .= $exp;
+                file_put_contents($logfile, $current);
+                
 		$data = json_decode($_POST['body']);
 		$string = $data->{'base'};
 		$min = $data->{'block'} * $data->{'blockSize'};
@@ -10,7 +17,7 @@
 		$size = strlen($result);
 		for ($i=$min; $i<$max; ++$i){
 			$percentagem = ($i/$max)*100;
-			print $percentagem + "% calculado.";
+			print $percentagem + "% calculado.\n";
 			$res = hash('sha256', $string+$i);
 			
 			if ($res == $result){
