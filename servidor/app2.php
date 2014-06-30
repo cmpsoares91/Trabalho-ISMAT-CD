@@ -1,6 +1,6 @@
 <?php
-	if (!$_POST['data'] == ""){
+	if (!$_POST['key1'] == ""){
 		ob_start();
-		echo $_POST['data'];
+		echo $_POST['key1'];
 	}
 ?>
