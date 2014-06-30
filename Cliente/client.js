@@ -71,11 +71,12 @@ function postJob(URL, blockNum){
 	//debug
 	console.log("body: " + JSON.stringify(requestObject));
 	
+	request.setEncoding(String);
+	
 	var options = {
 	  url: url,
 	  method: 'POST',
-	  'content-type': 'application/json',
-	  body: JSON.stringify(requestObject)
+	  body: "requestObject"
 	};
 
 	var r = request(options, function (error, response, body) {
