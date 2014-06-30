@@ -6,7 +6,7 @@
 		"slave4.quantbull.org",
 		"slave5.quantbull.org"
 	],
-	"blockSize": 10,
+	"blockSize": 1000,
 	"baseString": "Hello prof. Pedro Freire!",
 	"objective": "0000"
 }
