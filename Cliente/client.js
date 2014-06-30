@@ -66,7 +66,7 @@ function postJob(URL, blockNum){
 	requestObject.objective = objString || "00000";
 	requestObject.block     = blockNum;
 	
-	var url1 = 'http://' + URL + '/app.php';
+	var url1 = 'http://' + URL + '/app2.php';
 	var codeString = JSON.stringify(requestObject);
 	var result;
 
