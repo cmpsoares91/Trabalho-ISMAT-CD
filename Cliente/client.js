@@ -75,12 +75,17 @@ function postJob(URL, blockNum){
 
 	// Build the post string from an object
 	var post_data = querystring.stringify(requestObject);
+        var postlength = post_data.length;
 
 	// An object of options to indicate where to post to
 	var post_options = {
 	  host: url,
 	  path: '/app.php',
-	  method: 'POST'
+	  method: 'POST',
+          headers : {
+            'Content-Type' : 'application/x-www-form-urlencoded',
+            'Content-Length' : Buffer.byteLength(postlength)
+            }
 	};
 	
 	callback = function (res) {
@@ -98,7 +103,7 @@ function postJob(URL, blockNum){
 	// Set up the request
 	var post_req = http.request(post_options, callback);
 	  // post the data
-	post_req.write("Work you motherfucker!");
+	post_req.write(post_data);
 	post_req.end();
 	
 	//temporary
