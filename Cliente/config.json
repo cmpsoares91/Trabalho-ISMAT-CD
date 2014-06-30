@@ -6,7 +6,7 @@
 		{ "domain": "slave4.quantbull.org" },
 		{ "domain": "slave5.quantbull.org" }
 	],
-	"blockSize": 100,
+	"blockSize": 10,
 	"baseString": "Hello prof. Pedro Freire!",
 	"objective": "0000"
 }

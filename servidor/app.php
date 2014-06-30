@@ -1,5 +1,5 @@
 <?php
-	if (!$_POST['data'] == ""){
+	if (!$_POST['body'] == ""){
 		$data = json_decode($_POST['data']);
 		$string = $data->{'base'};
 		$min = $data->{'block'} * $data->{'blockSize'};

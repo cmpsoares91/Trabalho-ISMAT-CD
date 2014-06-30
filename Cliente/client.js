@@ -1,7 +1,7 @@
 /**
  * Client application in Node.js
  */
-var needle = require('needle');
+var request = require('request');
 var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
 var Q      = require('./Queue.js');
  
@@ -65,25 +65,28 @@ function postJob(URL, blockNum){
 	requestObject.objective = objString || "00000";
 	requestObject.block     = blockNum;
 	
+	var url = 'http://' + URL + '/app.php';
 	var result;
 	
 	//debug
 	console.log("inside env before post");
-	var options = {};
-	var url = URL + '/app.php';
 	
-	needle.post(url, JSON.stringify(requestObject), options, function(error, response, body){
-		if(error){
-			console.log("Error: " + error);
-			console.log("Adding block number to queue...");
-			arrayPosts[arrayPosts.indexOf(blockNum)] = null;
-			blockQueue.enqueue(blockNum);
-		}
-		else {
+	var options = {
+	  uri: url,
+	  method: 'POST',
+	  body: JSON.stringify(requestObject)
+	  json: true
+	};
+
+	var r = request.post(options, function (error, response, body) {
+		console.log(error);
+		console.log(response);
+		console.log(body);
+		if (!error && response.statusCode == 200) {
 			console.log("Response is: " + response);
 			console.log("Error is: " + error);
 			
-			result = jQuery.parseJSON(response.body)
+			result = jQuery.parseJSON(body)
 			console.log(result);
 			if(result.found){
 				console.log("Problem Solved!");
@@ -94,8 +97,16 @@ function postJob(URL, blockNum){
 			console.log("Not found clearing slave...");
 			arrayPosts[arrayPosts.indexOf(blockNum)] = null;
 		}
+		else {
+			console.log("Error: " + error);
+			console.log("Adding block number to queue...");
+			arrayPosts[arrayPosts.indexOf(blockNum)] = null;
+			blockQueue.enqueue(blockNum);
+		}
 	});
+
 	console.log("Post sent...");
+	//console.log(r);
 }
 
 //main function
@@ -118,8 +129,8 @@ function main(){
 			//debug
 			//console.log("Array spot is: " + arrayPosts[a]);
 			//console.log("It's on block nr: " + block);
-			if(arrayPosts[a] == undefined){
-				console.log("Array spot is null: " + arrayPosts[a]);
+			if(arrayPosts[a] == undefined || arrayPosts[a] == null){
+				console.log("Array spot is undefined: " + arrayPosts[a]);
 				if (blockQueue.isEmpty()) {
 					//debug
 					console.log("Queue is empty");
