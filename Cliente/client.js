@@ -14,7 +14,7 @@
  *  An example HTTP POST request.
  */
 //Global variables
-var blockQueue    = new Q.Queue(); //Queue with the posts
+var blockQueue   = new Q.Queue(); //Queue with the posts
 var arrayPosts   = new Array();   //postJob Object array
 
 //Load configuration data to variables
@@ -119,7 +119,7 @@ function main(){
 	
 	//Main loop only stops if result is true
     while (result !== true){
-		for(a = 0; a < maxPosts; a++){
+		for(a = 0; a <= maxPosts; a++){
 			//debug
 			console.log("Array spot is: " + arrayPosts[a]);
 			if(arrayPosts[a] === undefined){
