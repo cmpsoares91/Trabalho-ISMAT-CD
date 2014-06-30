@@ -1,10 +1,8 @@
 <?php
 	//input logfile
-	$req_dump = print_r($_REQUEST, TRUE);
-	$fp = fopen('request.log', 'a');
-	fwrite($fp, $req_dump);
-	fclose($fp);
-
+	$req_dump = print_r( $_REQUEST, true );
+	$fp = file_put_contents( 'request.log', $req_dump, FILE_APPEND);
+	
 	if (!$_POST['data'] == ""){
 		$exp = "entrei";
 		
