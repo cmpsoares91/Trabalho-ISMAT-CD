@@ -60,12 +60,12 @@ function postJob(URL, blockNum){
 	console.log("postjob called");
 
 	//Define Post request object
-	var requestObject       = {};
-	requestObject.blockSize = bSize || 1000;
-	requestObject.base      = bString || "Hello, World!";
-	requestObject.objective = objString || "00000";
-	requestObject.block     = blockNum;
-	
+	var requestObject       = {
+	blockSize : bSize || 1000,
+	base      : bString || "Hello, World!",
+	objective : objString || "00000",
+	block     : blockNum
+        };
 	var url = 'http://' + URL + '/app.php';
 	//var codeString = JSON.stringify(requestObject);
 	//var result;
@@ -85,7 +85,7 @@ function postJob(URL, blockNum){
 	  path: '/app.php',
 	  method: 'POST',
           headers: {
-            'Content-Type' : 'application/x-www-form-urlencoded',
+            'Content-Type' : 'application/json',
             'Content-Length' : postlength
             }
 	};
