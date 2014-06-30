@@ -83,7 +83,7 @@ function postJob(URL, blockNum){
 	  method: 'POST'
 	};
 	
-	callback function(res) {
+	callback = function (res) {
 		res.setEncoding('utf8');
 		
 		res.on('data', function (chunk) {
