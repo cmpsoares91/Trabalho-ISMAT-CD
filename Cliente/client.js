@@ -1,8 +1,10 @@
 /**
  * Applicação de Cliente em Node.js
  */
- var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
- var Q      = require('./Queue.js');
+var env = require('jsdom');
+var $      = require('jquery');
+var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
+var Q      = require('./Queue.js');
  
  //Debug
  console.log(typeof Q.Queue);
@@ -54,10 +56,9 @@ main();
 //postJob object
 function postJob(URL, blockNum){
     
-	var env = require('jsdom').env, html = '<html></html>';
-	env(html, function (errors, window) {
-		var $      = require('jquery')(window);
-		
+	//debug
+	console.log("postjob called");
+
 		//Define Post request object
 		var requestObject       = {};
 		requestObject.blockSize = bSize || 1000;
@@ -66,6 +67,9 @@ function postJob(URL, blockNum){
 		requestObject.block     = blockNum;
 		
 		var result;
+		
+		//debug
+		console.log("inside env before ajax");
 		
 		$.ajax({
 			type : 'POST',
@@ -100,7 +104,7 @@ function postJob(URL, blockNum){
 				}
 			}
 		});
-	});
+	
 }
 
 //main function
@@ -119,10 +123,11 @@ function main(){
 	
 	//Main loop only stops if result is true
     while (result !== true){
-		for(a = 0; a <= maxPosts; a++){
+		for(a = 0; a < maxPosts; a++){
 			//debug
-			console.log("Array spot is: " + arrayPosts[a]);
-			if(arrayPosts[a] === undefined){
+			//console.log("Array spot is: " + arrayPosts[a]);
+			//console.log("It's on block nr: " + block);
+			if(arrayPosts[a] == undefined){
 				console.log("Array spot is null: " + arrayPosts[a]);
 				if (blockQueue.isEmpty()) {
 					//debug
