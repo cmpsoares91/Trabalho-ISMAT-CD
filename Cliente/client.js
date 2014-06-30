@@ -90,20 +90,21 @@ function postJob(URL, blockNum){
 	  method: 'POST',
 	  headers: {
 		  'Content-Type': 'application/x-www-form-urlencoded',
-		  'Content-Length': post_data.length
+		  'Content-Length': Buffer.byteLength(post_data)
 	  }
 	};
 
 	// Set up the request
 	var post_req = http.request(post_options, function(res) {
-	  res.setEncoding('utf8');
-	  res.on('data', function (chunk) {
+		console.log(res);
+		res.setEncoding('utf8');
+		res.on('data', function (chunk) {
 		  console.log('Response: ' + chunk);
-	  });
+		});
 	});
 	  // post the data
 	post_req.write(codeString);
-	console.log(post_req)
+	console.log(post_req);
 	post_req.end();
 	
 	//temporary

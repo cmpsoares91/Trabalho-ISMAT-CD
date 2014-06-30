@@ -1,12 +1,25 @@
 <?php
+	//input logfile
+	$logfile = 'input.log';
+	$input = file_get_contents($logfile);
+	$json = file_get_contents('php://input');
+	$input .= $json;
+	$obj = json_decode($json);
+	$input .= $obj;
+	file_put_contents($logfile, $current);
+
 	if (!$_POST['data'] == ""){
 		$exp = "entrei";
+		
+		$json = file_get_contents('php://input');
+		$obj = json_decode($json);
                 
                 //logfile
                 $logfile = 'log.txt';
                 $current = file_get_contents($logfile);
                 $current .= $exp;
 				$current .= $_POST;
+				$current .= $obj;
                 file_put_contents($logfile, $current);
                 
 		$data = json_decode($_POST['data']);
