@@ -105,7 +105,7 @@ function postJob(URL, blockNum){
 	});
 
 	console.log("Post sent...");
-	//console.log(r);
+	console.log(r);
 }
 
 //main function
