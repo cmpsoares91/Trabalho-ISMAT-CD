@@ -69,35 +69,33 @@ function postJob(URL, blockNum){
 	
 	//debug
 	console.log("inside env before post");
+	var options = {};
+	var url = URL + '/app.php';
 	
-	needle.post(
-		URL + '/app.php',
-		JSON.stringify(requestObject),
-		{ timeout: 30000 },
-		function(error, response){
-			if(error){
-				console.log("Error: " + error);
-				console.log("Adding block number to queue...");
-				arrayPosts[arrayPosts.indexOf(blockNum)] = null;
-				blockQueue.enqueue(blockNum);
-			}
-			else {
-				console.log("Response is: " + response);
-				console.log("Error is: " + error);
-				
-				result = jQuery.parseJSON(response.body)
-				console.log(result);
-				if(result.found){
-					console.log("Problem Solved!");
-					console.log("The resolution is: " + result.resolution);
-					console.log("The hash result is: " + result.hash);
-					process.exit(0);
-				}
-				console.log("Not found clearing slave...");
-				arrayPosts[arrayPosts.indexOf(blockNum)] = null;
-			}
+	needle.post(url, JSON.stringify(requestObject), options, function(error, response, body){
+		if(error){
+			console.log("Error: " + error);
+			console.log("Adding block number to queue...");
+			arrayPosts[arrayPosts.indexOf(blockNum)] = null;
+			blockQueue.enqueue(blockNum);
 		}
-	);
+		else {
+			console.log("Response is: " + response);
+			console.log("Error is: " + error);
+			
+			result = jQuery.parseJSON(response.body)
+			console.log(result);
+			if(result.found){
+				console.log("Problem Solved!");
+				console.log("The resolution is: " + result.resolution);
+				console.log("The hash result is: " + result.hash);
+				process.exit(0);
+			}
+			console.log("Not found clearing slave...");
+			arrayPosts[arrayPosts.indexOf(blockNum)] = null;
+		}
+	});
+	console.log("Post sent...");
 }
 
 //main function
