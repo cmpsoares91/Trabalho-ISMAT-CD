@@ -2,7 +2,8 @@
 var blockQueue   = new Queue(); //Queue with the posts
 var arrayPosts   = new Array();   //postJob Object array
 var result       = false; 		  //flag for cycle
-var maxPosts, bSize, objString, bString;
+//variables for use with html
+var maxPosts, bSize, objString, bString, found, resolution, hash;
 
 //postJob object
 function postJob(URL, blockNum){
@@ -25,21 +26,21 @@ function postJob(URL, blockNum){
 						console.log(tempresult);
 						if(result.found){
 							//Solution found, print that, stop cicle.
-							process.exit(0);
+							console.log("Solution found...")
+							result = true;
+							found.textContent = "Solucao encontrada"
+							resolution.textContent = result.resolution;
+							hash.textContent = result.hash;
 						}
 						console.log("Not found clearing slave...");
 						arrayPosts[arrayPosts.indexOf(blockNum)] = null;
 					},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log(textStatus);
-			if(textStatus === 'parsererror') {
-				//parse error occured, print that...
-			}
-			else {
-				//other error occurred print that and add block number to queue...
-				arrayPosts[arrayPosts.indexOf(blockNum)] = null;
-				blockQueue.enqueue(blockNum);
-			}
+			//error occurred print that and add block number to queue...
+			console.log(errorThrown);
+			arrayPosts[arrayPosts.indexOf(blockNum)] = null;
+			blockQueue.enqueue(blockNum);
 	    }
 	});
 }
@@ -82,7 +83,16 @@ function main(){
 	});
 	
 	//Retrieve arguments
-    var bString = document.getElementById("frase");
+    bString    = document.getElementById("frase");
+	objString  = document.getElementById("object");
+	bSize      = document.getElementById("bloco");
+	
+	//output variables
+	found      = document.getElementById("encontrou");
+	resolution = document.getElementById("resolucao");
+	hash       = document.getElementById("hash");
+	
+	//counting variables
     var a = 0, block = 0;
 	
 	//Main loop only stops if result is true
@@ -100,4 +110,6 @@ function main(){
 			}	
 		}
     }
+	
+	console.log("main() is finishing, bye!")
 }

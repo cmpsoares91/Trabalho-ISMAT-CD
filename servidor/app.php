@@ -9,7 +9,7 @@
 	if (!$_POST['base'] == ""){
                 $string = $_POST['base'];
                 $block = $_POST['block'];
-                $blocksize = $_POST['bloksize'];
+                $blocksize = $_POST['blockSize'];
                 $objective = $_POST['objective'];
                 
                 $min = $block * $blocksize;
