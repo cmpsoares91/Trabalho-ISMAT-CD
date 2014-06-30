@@ -78,14 +78,13 @@ function postJob(URL, blockNum){
 
 	// An object of options to indicate where to post to
 	var post_options = {
-	  host: url,
-	  path: '/app.php',
+	  host: URL,
+	  path: '/worker',
+	  port: 8080,
 	  method: 'POST'
 	};
 	
-	callback = function (res) {
-		res.setEncoding('utf8');
-		
+	callback = function (res) {		
 		res.on('data', function (chunk) {
 		  str += chunk;
 		});
@@ -96,10 +95,10 @@ function postJob(URL, blockNum){
 	}
 
 	// Set up the request
-	var post_req = http.request(post_options, callback);
+	var req = http.request(post_options, callback);
 	  // post the data
-	post_req.write("Work you motherfucker!");
-	post_req.end();
+	req.write("Work you motherfucker!");
+	req.end();
 	
 	//temporary
 	/*
