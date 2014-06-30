@@ -75,7 +75,6 @@ function postJob(URL, blockNum){
 	  uri: url,
 	  method: 'POST',
 	  body: JSON.stringify(requestObject)
-	  json: true
 	};
 
 	var r = request.post(options, function (error, response, body) {
@@ -86,7 +85,7 @@ function postJob(URL, blockNum){
 			console.log("Response is: " + response);
 			console.log("Error is: " + error);
 			
-			result = jQuery.parseJSON(body)
+			result = jQuery.parseJSON(body);
 			console.log(result);
 			if(result.found){
 				console.log("Problem Solved!");
@@ -134,6 +133,8 @@ function main(){
 				if (blockQueue.isEmpty()) {
 					//debug
 					console.log("Queue is empty");
+					console.log("Link: " + config.locations[a]);
+					console.log("Block: " + block);
 				
 					new postJob(config.locations[a], block);
 					arrayPosts[a] = block++;

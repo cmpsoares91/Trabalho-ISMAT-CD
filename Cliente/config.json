@@ -1,10 +1,10 @@
 {
 	"locations": [
-		{ "domain": "slave1.quantbull.org" },
-		{ "domain": "slave2.quantbull.org" },
-		{ "domain": "slave3.quantbull.org" },
-		{ "domain": "slave4.quantbull.org" },
-		{ "domain": "slave5.quantbull.org" }
+		"slave1.quantbull.org",
+		"slave2.quantbull.org",
+		"slave3.quantbull.org",
+		"slave4.quantbull.org",
+		"slave5.quantbull.org"
 	],
 	"blockSize": 10,
 	"baseString": "Hello prof. Pedro Freire!",
