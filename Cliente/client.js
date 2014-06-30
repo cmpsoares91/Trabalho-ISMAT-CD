@@ -69,18 +69,16 @@ function postJob(URL, blockNum){
 	var result;
 	
 	//debug
-	console.log("inside env before post");
+	console.log("body: " + JSON.stringify(requestObject));
 	
 	var options = {
 	  url: url,
 	  method: 'POST',
-	  body: {
-		'content-type': 'application/json',
-		JSON.stringify(requestObject)
-		}
+	  'content-type': 'application/json',
+	  body: JSON.stringify(requestObject)
 	};
 
-	var r = request.post(options, function (error, response, body) {
+	var r = request(options, function (error, response, body) {
 		console.log("erro: " + error);
 		console.log(response);
 		console.log(body);
