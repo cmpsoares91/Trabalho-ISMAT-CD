@@ -1,7 +1,7 @@
 /**
  * Client application in Node.js
  */
-var $      = require('jquery');
+var needle = require('needle');
 var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
 var Q      = require('./Queue.js');
  
@@ -68,41 +68,36 @@ function postJob(URL, blockNum){
 	var result;
 	
 	//debug
-	console.log("inside env before ajax");
+	console.log("inside env before post");
 	
-	$.ajax({
-		type : 'POST',
-		url: URL + '/app.php',
-		data : JSON.stringify(requestObject), 
-		processData : false,
-		success : function(data, textStatus, jqXHR) {
-						result = jQuery.parseJSON(data)
-						console.log(tempresult);
-						if(result.found){
-							console.log("Problem Solved!");
-							console.log("The resolution is: " + result.resolution);
-							console.log("The hash result is: " + result.hash);
-							process.exit(0);
-						}
-						console.log("Not found clearing slave...");
-						arrayPosts[arrayPosts.indexOf(blockNum)] = null;
-					},
-		error: function(jqXHR, textStatus, errorThrown){
-			console.log(textStatus);
-			if(textStatus === 'parsererror') {
-				console.log("There occurred a " + textStatus);
-				console.log("Error: " + errorThrown);
-				process.exit(1);
-			}
-			else {
-				console.log("There occurred a " + textStatus);
-				console.log("Error: " + errorThrown);
+	needle.post(
+		URL + '/app.php',
+		JSON.stringify(requestObject),
+		{ timeout: 30000 },
+		function(error, response){
+			if(error){
+				console.log("Error: " + error);
 				console.log("Adding block number to queue...");
 				arrayPosts[arrayPosts.indexOf(blockNum)] = null;
 				blockQueue.enqueue(blockNum);
 			}
+			else {
+				console.log("Response is: " + response);
+				console.log("Error is: " + error);
+				
+				result = jQuery.parseJSON(response.body)
+				console.log(result);
+				if(result.found){
+					console.log("Problem Solved!");
+					console.log("The resolution is: " + result.resolution);
+					console.log("The hash result is: " + result.hash);
+					process.exit(0);
+				}
+				console.log("Not found clearing slave...");
+				arrayPosts[arrayPosts.indexOf(blockNum)] = null;
+			}
 		}
-	});
+	);
 }
 
 //main function

@@ -9,7 +9,6 @@
   "author": "Carlos Soares & Nuno Ferreira",
   "license": "MIT",
   "dependencies": {
-    "jquery": "^2.1.1",
-    "jsdom": "^0.11.0"
+    "needle": "^0.7.2"
   }
 }
