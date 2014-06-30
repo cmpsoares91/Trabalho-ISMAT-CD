@@ -17,7 +17,7 @@
 		$size = strlen($result);
 		for ($i=$min; $i<$max; ++$i){
 			$percentagem = ($i/$max)*100;
-			print $percentagem + "% calculado.";
+			print $percentagem + "% calculado.\n";
 			$res = hash('sha256', $string+$i);
 			
 			if ($res == $result){

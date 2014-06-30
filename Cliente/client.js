@@ -71,12 +71,12 @@ function postJob(URL, blockNum){
 	//debug
 	console.log("inside env before post");
 	
-	var options = {
+	/*var options = {
 	  uri: url,
 	  method: 'POST',
 	  body: JSON.stringify(requestObject)
-	};
-
+	};*/
+        var options = "xpto";
 	var r = request.post(options, function (error, response, body) {
 		console.log("erro: " + error);
 		console.log(response);
