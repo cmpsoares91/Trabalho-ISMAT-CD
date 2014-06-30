@@ -51,37 +51,37 @@ console.log("depois postJob");
 function main(){
 	console.log("entrou");
 	//initialize variable so that if some aren't defined it used defaults from config.json
-	$.getJSON('./config.json', function(config) {
-		//config.locations.length e config.locations[0] devem estar a funcionar agora...
-		maxPosts     = config.locations.length; //Maximum number of posts working simultaneously, it depends on the number of hosts
-		//bSize load:
-		try {
-			bSize = config.blockSize;
-		}
-		catch(err) {
-			//Debug:
-			console.log("Couldn't load blockSize from config");
-			console.log(err);
-		}
-		//objString load:
-		try {
-			objString = config.objective;
-		}
-		catch(err) {
-			//Debug:
-			console.log("Couldn't load objective string from config");
-			console.log(err);
-		}
-		//bString load:
-		try {
-			bString = config.baseString;
-		}
-		catch(err) {
-			//Debug:
-			console.log("Couldn't load base string from config");
-			console.log(err);
-		}
-	});
+	jsonData = "{\"locations\": [\"slave1.quantbull.org\",\"slave2.quantbull.org\",\"slave3.quantbull.org\",\"slave4.quantbull.org\",\"slave5.quantbull.org\"],\"blockSize\": 1000,\"baseString\": \"Hello prof. Pedro Freire!\",\"objective\": \"0000\"}";
+	var config = jQuery.parseJSON(jsonData);
+	//config.locations.length e config.locations[0] devem estar a funcionar agora...
+	maxPosts     = config.locations.length; //Maximum number of posts working simultaneously, it depends on the number of hosts
+	//bSize load:
+	try {
+		bSize = config.blockSize;
+	}
+	catch(err) {
+		//Debug:
+		console.log("Couldn't load blockSize from config");
+		console.log(err);
+	}
+	//objString load:
+	try {
+		objString = config.objective;
+	}
+	catch(err) {
+		//Debug:
+		console.log("Couldn't load objective string from config");
+		console.log(err);
+	}
+	//bString load:
+	try {
+		bString = config.baseString;
+	}
+	catch(err) {
+		//Debug:
+		console.log("Couldn't load base string from config");
+		console.log(err);
+	}
 	
 	//Retrieve arguments
     bString    = document.getElementById("frase");
