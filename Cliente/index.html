@@ -16,11 +16,14 @@ and open the template in the editor.
     <body>
         
             <div>
+                <form onsubmit="main()">
                 Frase base: <input type="text" id="frase"><br>
                 Tamanho do bloco: <input type="text" id="bloco"><br>
                 Frase objectivo: <input type="text" id="object"><br>
                 <br><br>
-				<button type="button" onclick="main()">Submit</button>
+                <input type="submit" value="Submit">
+                </form>
+            <button type="button" onclick="main()">Submit</button>
             </div>
         
         <div>
