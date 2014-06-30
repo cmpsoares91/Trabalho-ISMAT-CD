@@ -9,6 +9,7 @@
   "author": "Carlos Soares & Nuno Ferreira",
   "license": "MIT",
   "dependencies": {
-    "request": "^2.36.0"
+    "request": "^2.36.0",
+    "restler": "^3.2.2"
   }
 }
