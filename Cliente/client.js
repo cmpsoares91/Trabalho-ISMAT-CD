@@ -76,7 +76,8 @@ function postJob(URL, blockNum){
 	// Build the post string from an object
 	var post_data = querystring.stringify(requestObject);
         var postlength = post_data.length;
-
+        console.log(post_data);
+        
 	// An object of options to indicate where to post to
 	var post_options = {
 	  host: url,
@@ -84,7 +85,7 @@ function postJob(URL, blockNum){
 	  method: 'POST',
           headers : {
             'Content-Type' : 'application/x-www-form-urlencoded',
-            'Content-Length' : Buffer.byteLength(postlength)
+            'Content-Length' : postlength
             }
 	};
 	
