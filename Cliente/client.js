@@ -81,7 +81,7 @@ function postJob(URL, blockNum){
 		url: url1,
 		method: 'POST',
 		headers: headers,
-		form: {'key1': 'xxx', 'key2': 'yyy'}
+		form: {'base': 'xxx'}
 	}
 
 	// Start the request
@@ -90,6 +90,7 @@ function postJob(URL, blockNum){
 			// Print out the response body
 			console.log(body)
 		}
+		else console.log(error);
 	})
 
 	//temporary
