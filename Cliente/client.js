@@ -1,7 +1,7 @@
 /**
  * Client application in Node.js
  */
-var http = require('http');
+var request = require('request');
 var querystring = require('querystring');
 var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
 var Q      = require('./Queue.js');
@@ -66,46 +66,32 @@ function postJob(URL, blockNum){
 	requestObject.objective = objString || "00000";
 	requestObject.block     = blockNum;
 	
-	var url = 'http://' + URL + '/app.php';
+	var url1 = 'http://' + URL + '/app.php';
 	var codeString = JSON.stringify(requestObject);
 	var result;
-	
-	//debug
-	console.log("body: " + JSON.stringify(requestObject));
 
-	// Build the post string from an object
-	var post_data = querystring.stringify({
-	  'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
-	  'output_format': 'json',
-	  'output_info': 'compiled_code',
-		'warning_level' : 'QUIET',
-		'js_code' : codeString
-	});
+	// Set the headers
+	var headers = {
+		'User-Agent':       'Super Agent/0.0.1',
+		'Content-Type':     'application/x-www-form-urlencoded'
+	}
 
-	// An object of options to indicate where to post to
-	var post_options = {
-	  host: url,
-	  port: '80',
-	  path: '/app.php',
-	  method: 'POST',
-	  headers: {
-		  'Content-Type': 'application/x-www-form-urlencoded',
-		  'Content-Length': post_data.length
-	  }
-	};
+	// Configure the request
+	var options = {
+		url: url1,
+		method: 'POST',
+		headers: headers,
+		form: {'key1': 'xxx', 'key2': 'yyy'}
+	}
 
-	// Set up the request
-	var post_req = http.request(post_options, function(res) {
-	  res.setEncoding('utf8');
-	  res.on('data', function (chunk) {
-		  console.log('Response: ' + chunk);
-	  });
-	});
-	  // post the data
-	post_req.write(codeString);
-	console.log(post_req)
-	post_req.end();
-	
+	// Start the request
+	request(options, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			// Print out the response body
+			console.log(body)
+		}
+	})
+
 	//temporary
 	/*
 	var options = {
