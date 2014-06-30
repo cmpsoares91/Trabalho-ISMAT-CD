@@ -1,6 +1,13 @@
 <?php
 	if (!$_POST['body'] == ""){
-		print "entrei";
+		$exp = "entrei";
+                
+                //logfile
+                $logfile = 'log.txt';
+                $current = file_get_contents($logfile);
+                $current .= $exp;
+                file_put_contents($logfile, $current);
+                
 		$data = json_decode($_POST['body']);
 		$string = $data->{'base'};
 		$min = $data->{'block'} * $data->{'blockSize'};
