@@ -1,5 +1,6 @@
 <?php
 	if (!$_POST['body'] == ""){
+		print "entrei";
 		$data = json_decode($_POST['body']);
 		$string = $data->{'base'};
 		$min = $data->{'block'} * $data->{'blockSize'};
@@ -13,8 +14,8 @@
 			$res = hash('sha256', $string+$i);
 			
 			if ($res == $result){
-				$json_string = "{\"found\": \"true\", \"resolution\": \"" + $string+$i + "\", \"hash\": \"" + $res +"\"}";
 				ob_start();
+				$json_string = "{\"found\": \"true\", \"resolution\": \"" + $string+$i + "\", \"hash\": \"" + $res +"\"}";
 				echo json_encode($json_string);
 				break;
 			}

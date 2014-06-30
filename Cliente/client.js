@@ -78,14 +78,14 @@ function postJob(URL, blockNum){
 	};
 
 	var r = request.post(options, function (error, response, body) {
-		console.log(error);
+		console.log("erro: " + error);
 		console.log(response);
 		console.log(body);
 		if (!error && response.statusCode == 200) {
 			console.log("Response is: " + response);
 			console.log("Error is: " + error);
 			
-			result = jQuery.parseJSON(body);
+			result = JSON.parse(body);
 			console.log(result);
 			if(result.found){
 				console.log("Problem Solved!");
