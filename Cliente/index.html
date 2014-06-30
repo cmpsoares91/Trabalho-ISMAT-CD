@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Projecto de computação distribuida</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="Queue.js"></script>
+        <script src="client.js"></script>
+    </head>
+    <body>
+        
+            <div>
+                <form onsubmit="main()">
+                Frase base: <input type="text" name="frase"><br>
+                Tamanho do bloco: <input type="text" name="bloco"><br>
+                Frase objectivo: <input type="text" name="object"><br>
+                <br><br>
+                <input type="submit" value="Submit">
+                </form>
+            </div>
+        
+        <div>
+            Resultados:<br>
+        Encontrou? <span id="encontrou"></span><br>
+		&nbsp;&nbsp;&nbsp;
+        Resolução: <span id="resolucao"></span><br>
+                &nbsp;&nbsp;&nbsp;
+        Hash: <span id="hash"></span><br>
+            
+            
+        </div>
+            
+    </body>
+</html>
