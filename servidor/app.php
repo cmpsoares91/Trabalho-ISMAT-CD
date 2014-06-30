@@ -1,6 +1,7 @@
 <?php
 	//input logfile
 	error_log((string)$_POST,0);
+	echo $_POST;
 	
 	if (!$_POST['data'] == ""){
 		$exp = "entrei";

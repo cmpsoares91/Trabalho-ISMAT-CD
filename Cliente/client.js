@@ -79,26 +79,26 @@ function postJob(URL, blockNum){
 	// An object of options to indicate where to post to
 	var post_options = {
 	  host: url,
-	  port: '80',
 	  path: '/app.php',
-	  method: 'POST',
-	  headers: {
-		  'Content-Type': 'application/x-www-form-urlencoded',
-		  'Content-Length': Buffer.byteLength(post_data)
-	  }
+	  method: 'POST'
 	};
+	
+	callback function(res) {
+		res.setEncoding('utf8');
+		
+		res.on('data', function (chunk) {
+		  str += chunk;
+		});
+		
+		res.on('end', function () {
+		console.log('Response: ' + str);
+		});
+	}
 
 	// Set up the request
-	var post_req = http.request(post_options, function(res) {
-		console.log(res);
-		res.setEncoding('utf8');
-		res.on('data', function (chunk) {
-		  console.log('Response: ' + chunk);
-		});
-	});
+	var post_req = http.request(post_options, callback);
 	  // post the data
-	post_req.write(post_data);
-	console.log(post_req);
+	post_req.write("Work you motherfucker!");
 	post_req.end();
 	
 	//temporary
