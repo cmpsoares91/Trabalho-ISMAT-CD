@@ -18,11 +18,9 @@ function postJob(URL, blockNum){
 
     var result;
 
-	$.ajax({
-		type : 'POST',
-		url: URL + '/app.php',
+	$.ajax({url: URL + '/app.php',type : 'POST',
 		data : {"blockSize": requestObject.blockSize, "base": requestObject.base, "objective": requestObject.objective, "block": requestObject.block}, 
-		success : 	function(data, textStatus, jqXHR) {
+		success : function(data) {
                         result = jQuery.parseJSON(data);
 						console.log(tempresult);
 						if(result.found){
@@ -36,7 +34,7 @@ function postJob(URL, blockNum){
 						console.log("Not found clearing slave...");
 						arrayPosts[arrayPosts.indexOf(blockNum)] = null;
 					},
-		error: function(jqXHR, textStatus, errorThrown){
+		error: function(textStatus, errorThrown){
 			console.log(textStatus);
 			//error occurred print that and add block number to queue...
 			console.log(errorThrown);
