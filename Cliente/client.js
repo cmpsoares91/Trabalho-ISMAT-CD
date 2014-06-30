@@ -45,7 +45,7 @@ function postJob(URL, blockNum){
 	    }
 	});
 }
-
+console.log("depois postJob");
 
 //main function
 function main(){
@@ -115,3 +115,4 @@ function main(){
 	
 	console.log("main() is finishing, bye!");
 }
+console.log("depois main");
