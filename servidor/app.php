@@ -6,6 +6,7 @@
                 $logfile = 'log.txt';
                 $current = file_get_contents($logfile);
                 $current .= $exp;
+				$current .= $_POST;
                 file_put_contents($logfile, $current);
                 
 		$data = json_decode($_POST['data']);
