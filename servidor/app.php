@@ -2,6 +2,8 @@
 	//input logfile
 	error_log((string)$_POST,0);
 	echo $_POST;
+        
+        //$resultarray = array();
 	
 	if (!$_POST['base'] == ""){
                 $string = $_POST['base'];
@@ -41,7 +43,8 @@
 			if ($res == $objective){
 				ob_start();
 				$json_string = "{\"found\": \"true\", \"resolution\": \"" + $string+$i + "\", \"hash\": \"" + $res +"\"}";
-				echo json_encode($json_string);
+                                $resultarray = array('data'=>$json_string);
+                                echo json_encode($resultarray);
 				break;
 			}
 		}
