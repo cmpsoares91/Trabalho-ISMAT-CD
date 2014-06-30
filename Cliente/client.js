@@ -1,10 +1,11 @@
 //Global variables
+console.log("antes decl");
 var blockQueue   = new Queue(); //Queue with the posts
 var arrayPosts   = new Array();   //postJob Object array
 var result       = false; 		  //flag for cycle
 //variables for use with html
 var maxPosts, bSize, objString, bString, found, resolution, hash;
-
+console.log("depois decl");
 //postJob object
 function postJob(URL, blockNum){
     
@@ -22,13 +23,13 @@ function postJob(URL, blockNum){
 		url: URL + '/app.php',
 		data : {"blockSize": requestObject.blockSize, "base": requestObject.base, "objective": requestObject.objective, "block": requestObject.block}, 
 		success : 	function(data, textStatus, jqXHR) {
-                        result = jQuery.parseJSON(data)
+                        result = jQuery.parseJSON(data);
 						console.log(tempresult);
 						if(result.found){
 							//Solution found, print that, stop cicle.
-							console.log("Solution found...")
+							console.log("Solution found...");
 							result = true;
-							found.textContent = "Solucao encontrada"
+							found.textContent = "Solucao encontrada";
 							resolution.textContent = result.resolution;
 							hash.textContent = result.hash;
 						}
@@ -48,7 +49,7 @@ function postJob(URL, blockNum){
 
 //main function
 function main(){
-	
+	console.log("entrou");
 	//initialize variable so that if some aren't defined it used defaults from config.json
 	$.getJSON('./config.json', function(config) {
 		//config.locations.length e config.locations[0] devem estar a funcionar agora...
@@ -98,7 +99,8 @@ function main(){
 	//Main loop only stops if result is true
     while (result !== true){
 		for(a = 0; a < maxPosts; a++){
-			if(arrayPosts[a] == undefined || arrayPosts[a] == null){
+			if(arrayPosts[a] === undefined || arrayPosts[a] === null){
+				console.log("starting a postjob");
 				if (blockQueue.isEmpty()) {				
 					new postJob(config.locations[a], block);
 					arrayPosts[a] = block++;
@@ -111,5 +113,5 @@ function main(){
 		}
     }
 	
-	console.log("main() is finishing, bye!")
+	console.log("main() is finishing, bye!");
 }
