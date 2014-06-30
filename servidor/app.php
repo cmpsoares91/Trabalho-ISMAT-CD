@@ -1,5 +1,5 @@
 <?php
-	if (!$_POST['body'] == ""){
+	if (!$_POST['data'] == ""){
 		$exp = "entrei";
                 
                 //logfile
@@ -8,7 +8,7 @@
                 $current .= $exp;
                 file_put_contents($logfile, $current);
                 
-		$data = json_decode($_POST['body']);
+		$data = json_decode($_POST['data']);
 		$string = $data->{'base'};
 		$min = $data->{'block'} * $data->{'blockSize'};
 		$max = $min + $data->{'blockSize'} - 1;

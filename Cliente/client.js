@@ -1,7 +1,8 @@
 /**
  * Client application in Node.js
  */
-var request = require('request');
+var http = require('http');
+var querystring = require('querystring');
 var config = require('./config.json'); //config.locations.length e config.locations[0] devem estar a funcionar agora...
 var Q      = require('./Queue.js');
  
@@ -66,13 +67,47 @@ function postJob(URL, blockNum){
 	requestObject.block     = blockNum;
 	
 	var url = 'http://' + URL + '/app.php';
+	var codeString = JSON.stringify(requestObject);
 	var result;
 	
 	//debug
 	console.log("body: " + JSON.stringify(requestObject));
+
+	// Build the post string from an object
+	var post_data = querystring.stringify({
+	  'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
+	  'output_format': 'json',
+	  'output_info': 'compiled_code',
+		'warning_level' : 'QUIET',
+		'js_code' : codeString
+	});
+
+	// An object of options to indicate where to post to
+	var post_options = {
+	  host: url,
+	  port: '80',
+	  path: '/app.php',
+	  method: 'POST',
+	  headers: {
+		  'Content-Type': 'application/x-www-form-urlencoded',
+		  'Content-Length': post_data.length
+	  }
+	};
+
+	// Set up the request
+	var post_req = http.request(post_options, function(res) {
+	  res.setEncoding('utf8');
+	  res.on('data', function (chunk) {
+		  console.log('Response: ' + chunk);
+	  });
+	});
+	  // post the data
+	post_req.write(codeString);
+	console.log(post_req)
+	post_req.end();
 	
-	request.setEncoding(String);
-	
+	//temporary
+	/*
 	var options = {
 	  url: url,
 	  method: 'POST',
@@ -105,9 +140,10 @@ function postJob(URL, blockNum){
 			blockQueue.enqueue(blockNum);
 		}
 	});
+	*/
 
 	console.log("Post sent...");
-	console.log(r);
+	//console.log(r);
 }
 
 //main function
