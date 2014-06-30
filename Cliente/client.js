@@ -74,13 +74,7 @@ function postJob(URL, blockNum){
 	console.log("body: " + JSON.stringify(requestObject));
 
 	// Build the post string from an object
-	var post_data = querystring.stringify({
-	  'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
-	  'output_format': 'json',
-	  'output_info': 'compiled_code',
-		'warning_level' : 'QUIET',
-		'js_code' : codeString
-	});
+	var post_data = querystring.stringify(requestObject);
 
 	// An object of options to indicate where to post to
 	var post_options = {
@@ -103,7 +97,7 @@ function postJob(URL, blockNum){
 		});
 	});
 	  // post the data
-	post_req.write(codeString);
+	post_req.write(post_data);
 	console.log(post_req);
 	post_req.end();
 	
